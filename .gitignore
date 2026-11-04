@@ -18,6 +18,4 @@ next-env.d.ts
 /playwright-report/
 # local-only corpora (copyrighted books etc.), never committed
 /local/
-# runtime data
-/data/
 /e2e/.data/

@@ -1,0 +1,18 @@
+services:
+  web:
+    build: .
+    # The key is read at container start, never copied into the image (.env is dockerignored).
+    # Without it the app still works: everything it shows comes from committed run folders.
+    env_file:
+      - path: .env
+        required: false
+    ports: ["127.0.0.1:${EF_PORT:-3020}:3020"]
+    # Bind mounts from the checkout. Waivers and confirms written in the app land in ./data,
+    # so they show up in git status and can be committed (git is the audit trail).
+    volumes:
+      - ./config:/data/config
+      - ./fixtures:/data/fixtures
+      - ./data:/data/data
+      - ./cache:/data/cache
+      - ./runs:/data/runs
+      - ./gate:/data/gate
