@@ -13,9 +13,12 @@ export interface PromptVersion {
   messages: Msg[];
 }
 
-/** Prompt versions are files in data/prompts/<name>.md. Editing one in place changes its sha, visibly. */
-export function loadPrompt(dataDir: string, name: string): PromptVersion {
+/**
+ * Prompt versions are files in data/<folder>/<name>.md (answer prompts in "prompts",
+ * judge prompts in "judge"). Editing one in place changes its sha, visibly.
+ */
+export function loadPrompt(dataDir: string, name: string, folder: "prompts" | "judge" = "prompts"): PromptVersion {
   if (!/^[A-Za-z]+\.v\d+$/.test(name)) throw new Error(`prompt name must look like A.v1, got "${name}"`);
-  const text = readFileSync(path.join(dataDir, "data", "prompts", `${name}.md`), "utf8");
+  const text = readFileSync(path.join(dataDir, "data", folder, `${name}.md`), "utf8");
   return { name, sha: sha256Hex(text), text, messages: parsePromptFile(text) };
 }
