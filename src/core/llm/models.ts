@@ -7,6 +7,8 @@ export interface ModelAccess {
   apiKey: string;
   /** Point the provider client somewhere else (tests use a local mock server). */
   baseURL?: string;
+  /** fetch used by the provider client; runner.ts passes its tap so raw replies are kept. */
+  fetch?: typeof fetch;
 }
 
 /**
@@ -22,7 +24,7 @@ export async function makeModel(role: ModelRole, pricing: Pricing, access: Model
     maxTokens: role.params.maxTokens,
     maxRetries: 0,
     apiKey: access.apiKey,
-    ...(access.baseURL ? { configuration: { baseURL: access.baseURL } } : {}),
+    configuration: { ...(access.baseURL ? { baseURL: access.baseURL } : {}), ...(access.fetch ? { fetch: access.fetch } : {}) },
   });
   return model as unknown as BaseChatModel;
 }
