@@ -1,0 +1,101 @@
+{
+  "repo": "https://github.com/stripe/openapi",
+  "commit": "b213739d4879835a5af50f15daaa3a41ae267985",
+  "path": "openapi/spec3.json",
+  "license": "MIT",
+  "api_version": "2026-09-30.endive",
+  "spec_sha256": "7cff4cc46d0654101a36a3302f7544640f5f73e4f3cad6f264f0e23c19fa1776",
+  "retrieved_at": "2026-11-04",
+  "slices": [
+    {
+      "id": "stripe:refunds.create",
+      "pointer": "/paths/~1v1~1refunds/post/description",
+      "sha256": "b495e12791ab0ef760b34f4658992c543a7ef4cfd7049c0f6093ff0bb48c051c"
+    },
+    {
+      "id": "stripe:refunds.create.charge",
+      "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/charge/description",
+      "sha256": "a7cfaacc1ec7531ea75a8e20273a03de180ebe6f60bdc0002163ff9d8d583a31"
+    },
+    {
+      "id": "stripe:refunds.create.payment_intent",
+      "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/payment_intent/description",
+      "sha256": "822122b025e240de46a513b04fa7f1c9ae036b78a51dbd82b1729a87005eb326"
+    },
+    {
+      "id": "stripe:refunds.create.reason",
+      "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/reason/description",
+      "sha256": "658b244adafa1227c5413b0c451f759a67de0bec8c333a60b7597eb1ba91871f"
+    },
+    {
+      "id": "stripe:refunds.create.refund_application_fee",
+      "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/refund_application_fee/description",
+      "sha256": "910503f6f27e3a954e01c3685b7faf25c40d7ef58c8018d30795ccb6e62d978c"
+    },
+    {
+      "id": "stripe:refunds.create.reverse_transfer",
+      "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/reverse_transfer/description",
+      "sha256": "c9f67ed04ebfa143737a8b3cea1cfaecd61840940f83995c48a2ac3d71aec864"
+    },
+    {
+      "id": "stripe:refunds.create.instructions_email",
+      "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/instructions_email/description",
+      "sha256": "b00a0452e11329e1b34e6251725c05a532db1fec8cb6093317a38781b2f3cc54"
+    },
+    {
+      "id": "stripe:refunds.create.customer",
+      "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/customer/description",
+      "sha256": "370f17fb65ec1107295de9c3c693cb633e50db6293a0479ef1301852d9a5c946"
+    },
+    {
+      "id": "stripe:refunds.update",
+      "pointer": "/paths/~1v1~1refunds~1{refund}/post/description",
+      "sha256": "728c8e5444acfc9cc87db3f84adcc9ac7c130e567b7df9aa7c2ad089df2e1171"
+    },
+    {
+      "id": "stripe:refunds.cancel",
+      "pointer": "/paths/~1v1~1refunds~1{refund}~1cancel/post/description",
+      "sha256": "74669d7ef6287dadcf05e1cbf6768d80fd9494819326a6267266a1a6ec1e585e"
+    },
+    {
+      "id": "stripe:refund.amount",
+      "pointer": "/components/schemas/refund/properties/amount/description",
+      "sha256": "80717ed7ae4a1b151dd83ab17638db4fc39900c3506b4df96694bd0fa733e224"
+    },
+    {
+      "id": "stripe:refund.status",
+      "pointer": "/components/schemas/refund/properties/status/description",
+      "sha256": "b0e7ab1f46a78d1a48482527b47bef363822107da68d03c5cb87ea88dde28d58"
+    },
+    {
+      "id": "stripe:refund.reason",
+      "pointer": "/components/schemas/refund/properties/reason/description",
+      "sha256": "57e5672481d3ac805684b26901baf3b25d8e874ffdcc3b67d45740c54ed4a791"
+    },
+    {
+      "id": "stripe:refund.failure_reason",
+      "pointer": "/components/schemas/refund/properties/failure_reason/description",
+      "sha256": "61d31e4089915dcecf1da8b7d411c86a44c173b9ae2812c29489beb772ecbad8"
+    },
+    {
+      "id": "stripe:refund.pending_reason",
+      "pointer": "/components/schemas/refund/properties/pending_reason/description",
+      "sha256": "88cabc9411d595e8456907f4ab0752b14232f7c49525316bbd1a63548a326bbb"
+    },
+    {
+      "id": "stripe:refund.receipt_number",
+      "pointer": "/components/schemas/refund/properties/receipt_number/description",
+      "sha256": "74fe1a028ef3ab03f148ab361a294a75c1cefb7c33c97e28e8a87730c7f2a800"
+    },
+    {
+      "id": "stripe:charge.amount_refunded",
+      "pointer": "/components/schemas/charge/properties/amount_refunded/description",
+      "sha256": "cbcac90d5afb6ecc26e463c0d738eb39d53c08e8478c0fc3184a074cbb939f0c"
+    },
+    {
+      "id": "stripe:charge.refunded",
+      "pointer": "/components/schemas/charge/properties/refunded/description",
+      "sha256": "b8b7d85839dd3946b8c862854b0ffaf9f80634f5a078f680daf17c83374ee6f9"
+    }
+  ]
+}

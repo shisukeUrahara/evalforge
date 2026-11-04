@@ -1,0 +1,110 @@
+[
+  {
+    "id": "stripe:refunds.create",
+    "pointer": "/paths/~1v1~1refunds/post/description",
+    "title": "Create a refund",
+    "text": "When you create a new refund, you must specify a Charge or a PaymentIntent object on which to create it.\n\nCreating a new refund will refund a charge that has previously been created but not yet refunded.\nFunds will be refunded to the credit or debit card that was originally charged.\n\nYou can optionally refund only part of a charge.\nYou can do so multiple times, until the entire charge has been refunded.\n\nOnce entirely refunded, a charge can’t be refunded again.\nThis method will raise an error when called on an already-refunded charge,\nor when trying to refund more money than is left on a charge."
+  },
+  {
+    "id": "stripe:refunds.create.charge",
+    "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/charge/description",
+    "title": "Create a refund: charge",
+    "text": "The identifier of the charge to refund."
+  },
+  {
+    "id": "stripe:refunds.create.payment_intent",
+    "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/payment_intent/description",
+    "title": "Create a refund: payment_intent",
+    "text": "The identifier of the PaymentIntent to refund."
+  },
+  {
+    "id": "stripe:refunds.create.reason",
+    "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/reason/description",
+    "title": "Create a refund: reason",
+    "text": "String indicating the reason for the refund. If set, possible values are `duplicate`, `fraudulent`, and `requested_by_customer`. If you believe the charge to be fraudulent, specifying `fraudulent` as the reason will add the associated card and email to your block lists, and will also help us improve our fraud detection algorithms."
+  },
+  {
+    "id": "stripe:refunds.create.refund_application_fee",
+    "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/refund_application_fee/description",
+    "title": "Create a refund: refund_application_fee",
+    "text": "Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. An application fee can be refunded only by the application that created the charge."
+  },
+  {
+    "id": "stripe:refunds.create.reverse_transfer",
+    "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/reverse_transfer/description",
+    "title": "Create a refund: reverse_transfer",
+    "text": "Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount).A transfer can be reversed only by the application that created the charge."
+  },
+  {
+    "id": "stripe:refunds.create.instructions_email",
+    "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/instructions_email/description",
+    "title": "Create a refund: instructions_email",
+    "text": "For payment methods without native refund support (e.g., Konbini, PromptPay), use this email from the customer to receive refund instructions."
+  },
+  {
+    "id": "stripe:refunds.create.customer",
+    "pointer": "/paths/~1v1~1refunds/post/requestBody/content/application~1x-www-form-urlencoded/schema/properties/customer/description",
+    "title": "Create a refund: customer",
+    "text": "Customer whose customer balance to refund from."
+  },
+  {
+    "id": "stripe:refunds.update",
+    "pointer": "/paths/~1v1~1refunds~1{refund}/post/description",
+    "title": "Update a refund",
+    "text": "Updates the refund that you specify by setting the values of the passed parameters. Any parameters that you don’t provide remain unchanged.\n\nThis request only accepts metadata as an argument."
+  },
+  {
+    "id": "stripe:refunds.cancel",
+    "pointer": "/paths/~1v1~1refunds~1{refund}~1cancel/post/description",
+    "title": "Cancel a refund",
+    "text": "Cancels a refund with a status of requires_action.\n\nYou can’t cancel refunds in other states. Only refunds for payment methods that require customer action can enter the requires_action state."
+  },
+  {
+    "id": "stripe:refund.amount",
+    "pointer": "/components/schemas/refund/properties/amount/description",
+    "title": "Refund object: amount",
+    "text": "Amount, in cents (or local equivalent)."
+  },
+  {
+    "id": "stripe:refund.status",
+    "pointer": "/components/schemas/refund/properties/status/description",
+    "title": "Refund object: status",
+    "text": "Status of the refund. This can be `pending`, `requires_action`, `succeeded`, `failed`, or `canceled`. Learn more about failed refunds."
+  },
+  {
+    "id": "stripe:refund.reason",
+    "pointer": "/components/schemas/refund/properties/reason/description",
+    "title": "Refund object: reason",
+    "text": "Reason for the refund, which is either user-provided (`duplicate`, `fraudulent`, or `requested_by_customer`) or generated by Stripe internally (`expired_uncaptured_charge`)."
+  },
+  {
+    "id": "stripe:refund.failure_reason",
+    "pointer": "/components/schemas/refund/properties/failure_reason/description",
+    "title": "Refund object: failure_reason",
+    "text": "Provides the reason for the refund failure. Possible values are: `lost_or_stolen_card`, `expired_or_canceled_card`, `charge_for_pending_refund_disputed`, `insufficient_funds`, `declined`, `merchant_request`, or `unknown`."
+  },
+  {
+    "id": "stripe:refund.pending_reason",
+    "pointer": "/components/schemas/refund/properties/pending_reason/description",
+    "title": "Refund object: pending_reason",
+    "text": "Provides the reason for why the refund is pending. Possible values are: `processing`, `insufficient_funds`, or `charge_pending`."
+  },
+  {
+    "id": "stripe:refund.receipt_number",
+    "pointer": "/components/schemas/refund/properties/receipt_number/description",
+    "title": "Refund object: receipt_number",
+    "text": "This is the transaction number that appears on email receipts sent for this refund."
+  },
+  {
+    "id": "stripe:charge.amount_refunded",
+    "pointer": "/components/schemas/charge/properties/amount_refunded/description",
+    "title": "Charge object: amount_refunded",
+    "text": "Amount in cents (or local equivalent) refunded (can be less than the amount attribute on the charge if a partial refund was issued)."
+  },
+  {
+    "id": "stripe:charge.refunded",
+    "pointer": "/components/schemas/charge/properties/refunded/description",
+    "title": "Charge object: refunded",
+    "text": "Whether the charge has been fully refunded. If the charge is only partially refunded, this attribute will still be false."
+  }
+]

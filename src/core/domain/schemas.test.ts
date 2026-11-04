@@ -5,17 +5,18 @@ const good = {
   id: "c001",
   category: "api_fact",
   question: "Can a refund exceed the charge?",
-  context_slice_ids: ["stripe:/paths/~1v1~1refunds/post"],
+  context_slice_ids: ["stripe:refunds.create"],
   critical: true,
-  expected: { must_refuse: false, must_cite: ["stripe:/paths/~1v1~1refunds/post"] },
+  expected: { must_refuse: false, must_cite: ["stripe:refunds.create"] },
   provenance: { drafted_by: "openai:gpt-4.1-2025-04-14" },
 };
 
 describe("schemas", () => {
   test("slice ids are stripe pointers or Northstar rules", () => {
-    expect(SliceId.safeParse("stripe:/paths/~1v1~1refunds/post").success).toBe(true);
+    expect(SliceId.safeParse("stripe:refunds.create").success).toBe(true);
     expect(SliceId.safeParse("ns:NS-R3").success).toBe(true);
     expect(SliceId.safeParse("slice-returns").success).toBe(false);
+    expect(SliceId.safeParse("stripe:/paths/x").success).toBe(false);
     expect(SliceId.safeParse("ns:R3").success).toBe(false);
   });
   test("a valid case parses; bad ids and empty context do not", () => {

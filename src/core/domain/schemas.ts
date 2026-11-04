@@ -1,7 +1,10 @@
 import { z } from "zod";
 
-/** Id of one source piece: a JSON pointer into the Stripe OpenAPI slice, or a Northstar rule. */
-export const SliceId = z.string().regex(/^(stripe:\/\S+|ns:NS-R\d+)$/, "slice id must be stripe:/<json-pointer> or ns:NS-R<n>");
+/**
+ * Id of one source piece: a short Stripe id (its JSON pointer is kept in
+ * fixtures/stripe/slice.json) or a Northstar rule. Short ids are easy to cite exactly.
+ */
+export const SliceId = z.string().regex(/^(stripe:[a-z_]+(\.[a-z_]+)*|ns:NS-R\d+)$/, "slice id must be stripe:<name.path> or ns:NS-R<n>");
 export type SliceId = z.infer<typeof SliceId>;
 
 export const Category = z.enum(["api_fact", "store_policy", "negative", "parity"]);
