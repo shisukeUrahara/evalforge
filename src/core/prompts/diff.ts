@@ -13,8 +13,10 @@ export function diffLines(before: string, after: string): DiffLine[] {
   let i = 0;
   let j = 0;
   while (i < a.length && j < b.length) {
-    if (a[i] === b[j]) out.push({ op: " ", text: a[i++] }), j++;
-    else if (lcs[i + 1][j] >= lcs[i][j + 1]) out.push({ op: "-", text: a[i++] });
+    if (a[i] === b[j]) {
+      out.push({ op: " ", text: a[i++] });
+      j++;
+    } else if (lcs[i + 1][j] >= lcs[i][j + 1]) out.push({ op: "-", text: a[i++] });
     else out.push({ op: "+", text: b[j++] });
   }
   while (i < a.length) out.push({ op: "-", text: a[i++] });
