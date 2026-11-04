@@ -24,7 +24,7 @@ test("broken judge output is judge_error, never unsupported", () => {
 
 test("the judge sees the case's frozen context and the answer, keyed per arm and repeat", async () => {
   const c: Case = { id: "c001", category: "api_fact", question: "Can a refund exceed the charge?", context_slice_ids: ["stripe:refunds.create"], critical: true, expected: { must_refuse: false }, provenance: { drafted_by: "d" } };
-  const row = { case_id: "c001", arm: "B", repeat: 2, output: { answer: "Yes, a little over is fine.", cited_source_ids: [], refused: false, refusal_reason: null } } as OutputRow;
+  const row = { case_id: "c001", arm: "B", repeat: 2, output: { answer: "Yes, a little over is fine.", cited_source_ids: [], refused: false, refusal_reason: null } } as unknown as OutputRow;
   const req = await judgeRequest(c, row, loadSlices(process.cwd()), loadPrompt(process.cwd(), "claims.v1", "judge"), loadModelRoles(process.cwd()).judge);
   expect([req.arm, req.repeat, req.schemaName]).toEqual(["judge-B", 2, "claim_judgment"]);
   expect(req.messages[0].content).toContain("[stripe:refunds.create]");
