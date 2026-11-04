@@ -1,6 +1,7 @@
 import { DirtyTreeError, PreregistrationError } from "@/core/artifacts/guard";
 import type { Command, Deps } from "./deps";
 import { applyCaseReviewCmd } from "./commands/applyCaseReview";
+import { canaries } from "./commands/canaries";
 import { doctor } from "./commands/doctor";
 import { draftCases } from "./commands/draftCases";
 import { freezeSplit } from "./commands/freezeSplit";
@@ -18,6 +19,7 @@ export const COMMANDS: Record<string, Command> = {
   "freeze-split": freezeSplit,
   run,
   judge,
+  canaries,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
