@@ -24,3 +24,17 @@ test("app may import react", async () => {
     "no-restricted-imports",
   );
 });
+
+test.each([
+  ["src/core/run/x.ts", true],
+  ["src/cli/x.ts", true],
+  ["src/app/x.tsx", true],
+  ["src/core/llm/x.ts", false],
+])("LangChain import in %s is rejected: %s", async (file, rejected) => {
+  const found = await rules('import { initChatModel } from "langchain";\nexport const f = initChatModel;\n', file);
+  expect(found.includes("no-restricted-imports")).toBe(rejected);
+});
+
+test("llm folder still may not import react", async () => {
+  expect(await rules('import React from "react";\nexport default React;\n', "src/core/llm/x.ts")).toContain("no-restricted-imports");
+});
