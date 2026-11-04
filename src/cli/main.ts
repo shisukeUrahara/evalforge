@@ -1,4 +1,5 @@
 import type { Command, Deps } from "./deps";
+import { applyCaseReviewCmd } from "./commands/applyCaseReview";
 import { doctor } from "./commands/doctor";
 import { draftCases } from "./commands/draftCases";
 import { verify } from "./commands/verify";
@@ -9,6 +10,7 @@ export const COMMANDS: Record<string, Command> = {
   doctor,
   verify,
   "draft-cases": draftCases,
+  "apply-case-review": applyCaseReviewCmd,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
