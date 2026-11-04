@@ -4,6 +4,7 @@ import { applyCaseReviewCmd } from "./commands/applyCaseReview";
 import { doctor } from "./commands/doctor";
 import { draftCases } from "./commands/draftCases";
 import { freezeSplit } from "./commands/freezeSplit";
+import { judge } from "./commands/judge";
 import { run } from "./commands/run";
 import { verify } from "./commands/verify";
 import { EXIT } from "./exit";
@@ -16,6 +17,7 @@ export const COMMANDS: Record<string, Command> = {
   "apply-case-review": applyCaseReviewCmd,
   "freeze-split": freezeSplit,
   run,
+  judge,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
