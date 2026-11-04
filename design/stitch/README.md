@@ -32,3 +32,14 @@ Every Stitch prompt carries exact text. Numbers in the designs are **sample data
 ## Project
 - Stitch project: `projects/2497184839464694802` ("EvalForge", private to the owner)
 - Design system made by Stitch from the first prompt: `assets/2132799dc50047c2bae19a7f9cf28581` ("EvalForge Release Gate", dark)
+
+## Approved screens (4 Nov 2026, dark)
+The owner approved these before any UI code. PNGs in `screens/`, shrunk to 1280 px wide.
+
+| Page | Screen id | PNG |
+|---|---|---|
+| Release gate | `0b3d4c96a1424661b87bddfe0655a8a9` | `screens/gate-dark.png` |
+| Comparison | `3b03629accbc490a91de5c9e1301a292` | `screens/compare-dark.png` |
+| Judge audit | `eb02f5b15b714a1bbaddad435ae1e0f0` | `screens/judge-dark.png` |
+
+Invented by Stitch, not used in the build: the hub icon next to the wordmark, slice ids like `slice-returns` (real ids look like `ns:NS-R3`), case ids above `c080`, and every number (real values come from run folders). Comparison clips the "refused: no" label; the build fixes that.
