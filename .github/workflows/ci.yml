@@ -18,4 +18,6 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
+      - name: Sources match their checksums
+        run: pnpm ef verify
       - run: pnpm build

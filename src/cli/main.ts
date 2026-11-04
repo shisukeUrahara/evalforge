@@ -1,10 +1,12 @@
 import type { Command, Deps } from "./deps";
 import { doctor } from "./commands/doctor";
+import { verify } from "./commands/verify";
 import { EXIT } from "./exit";
 
 /** Commands are added one per commit as the pipeline grows. */
 export const COMMANDS: Record<string, Command> = {
   doctor,
+  verify,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
