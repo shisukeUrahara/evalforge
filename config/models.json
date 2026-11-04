@@ -1,0 +1,6 @@
+{
+  "answer": { "spec": "openai:gpt-4.1-mini-2025-04-14", "method": "jsonSchema", "params": { "temperature": 0, "maxTokens": 400 } },
+  "swap": { "spec": "openai:gpt-4o-mini-2024-07-18", "method": "jsonSchema", "params": { "temperature": 0, "maxTokens": 400 } },
+  "judge": { "spec": "openai:gpt-4.1-2025-04-14", "method": "jsonSchema", "params": { "temperature": 0, "maxTokens": 1500 } },
+  "drafter": { "spec": "openai:gpt-4.1-2025-04-14", "method": "jsonSchema", "params": { "temperature": 0.7, "maxTokens": 6000 } }
+}
