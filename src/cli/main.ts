@@ -1,8 +1,10 @@
+import { DirtyTreeError, PreregistrationError } from "@/core/artifacts/guard";
 import type { Command, Deps } from "./deps";
 import { applyCaseReviewCmd } from "./commands/applyCaseReview";
 import { doctor } from "./commands/doctor";
 import { draftCases } from "./commands/draftCases";
 import { freezeSplit } from "./commands/freezeSplit";
+import { run } from "./commands/run";
 import { verify } from "./commands/verify";
 import { EXIT } from "./exit";
 
@@ -13,6 +15,7 @@ export const COMMANDS: Record<string, Command> = {
   "draft-cases": draftCases,
   "apply-case-review": applyCaseReviewCmd,
   "freeze-split": freezeSplit,
+  run,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
@@ -25,6 +28,11 @@ export async function main(argv: string[], deps: Deps, commands = COMMANDS): Pro
   try {
     return await command(rest, deps);
   } catch (e) {
+    // A holdout run refused by the guard is an expected outcome, not a crash.
+    if (e instanceof DirtyTreeError || e instanceof PreregistrationError) {
+      deps.err(e.message);
+      return EXIT.DIRTY_TREE;
+    }
     // parseArgs rejects unknown or malformed options with an ERR_PARSE_ARGS_* code.
     if (e instanceof Error && "code" in e && String(e.code).startsWith("ERR_PARSE_ARGS")) {
       deps.err(e.message);
