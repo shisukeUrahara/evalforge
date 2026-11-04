@@ -1,5 +1,6 @@
 import type { Command, Deps } from "./deps";
 import { doctor } from "./commands/doctor";
+import { draftCases } from "./commands/draftCases";
 import { verify } from "./commands/verify";
 import { EXIT } from "./exit";
 
@@ -7,6 +8,7 @@ import { EXIT } from "./exit";
 export const COMMANDS: Record<string, Command> = {
   doctor,
   verify,
+  "draft-cases": draftCases,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
