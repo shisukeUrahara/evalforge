@@ -43,3 +43,23 @@ The owner approved these before any UI code. PNGs in `screens/`, shrunk to 1280 
 | Judge audit | `eb02f5b15b714a1bbaddad435ae1e0f0` | `screens/judge-dark.png` |
 
 Invented by Stitch, not used in the build: the hub icon next to the wordmark, slice ids like `slice-returns` (real ids look like `ns:NS-R3`), case ids above `c080`, and every number (real values come from run folders). Comparison clips the "refused: no" label; the build fixes that.
+
+## Light and phone screens (4 Nov 2026)
+Made after the dark screens were approved, in the same layout. Light design system: `assets/f6792dce2692429899de1d709132bc79`.
+
+| Page | Variant | Screen id | PNG |
+|---|---|---|---|
+| Release gate | light | `2ae920c5eebf41cf9a6f22f8fda9fe67` | `screens/gate-light.png` |
+| Comparison | light | `8b04f4673f664b57a4e9316de74426e5` | `screens/compare-light.png` |
+| Judge audit | light | `40e0a2932f6c47d496b3ef097eaec9d1` | `screens/judge-light.png` |
+| Release gate | phone, dark | `ad9b8b81337544a6a8bee46685a89c29` | `screens/gate-phone-dark.png` |
+| Comparison | phone, dark | `82c54e7061e14dedb6d01f1748ac3358` | `screens/compare-phone-dark.png` |
+| Judge audit | phone, dark | `2bb05ff8d3e84ce48f310bc5e6a832d9` | `screens/judge-phone-dark.png` |
+
+The dark desktop screens stay the reference. What the build ignores here:
+- gate-light: solid coral FAIL pills (spec: tint only), extra check icon on the selected candidate.
+- compare-light: words broken mid-word, changed answer text for A, extra warning icon. Use the dark screen's text and normal wrapping.
+- judge-light: moon icon where the sun belongs, person icon in the user chip.
+- gate-phone-dark: missing "Noise floor" title; the C candidate is off screen (the build uses a scrollable segmented control).
+- compare-phone-dark: the "3 sources" count in the bottom sheet (there is one source).
+- judge-phone-dark: the confusion table is clipped; the build scrolls it inside its card. "trusted" should be a pill.
