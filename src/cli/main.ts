@@ -7,6 +7,7 @@ import { canaries } from "./commands/canaries";
 import { doctor } from "./commands/doctor";
 import { draftCases } from "./commands/draftCases";
 import { freezeSplit } from "./commands/freezeSplit";
+import { gate } from "./commands/gate";
 import { judge } from "./commands/judge";
 import { applyLabels, labelSheet } from "./commands/labels";
 import { report } from "./commands/report";
@@ -30,6 +31,7 @@ export const COMMANDS: Record<string, Command> = {
   report,
   waive,
   confirm,
+  gate,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
