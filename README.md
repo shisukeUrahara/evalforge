@@ -51,6 +51,10 @@ Read [docs/analysis.md](docs/analysis.md) for what the averages hide: the cheape
 |---|---|
 | ![Comparison](docs/screenshots/compare-dark.png) | ![Judge audit](docs/screenshots/judge-dark.png) |
 
+## CI catches an untested change
+
+[PR #1](https://github.com/shisukeUrahara/evalforge/pull/1) edits the gated prompt B in place without re-running the evaluation. CI fails: `pnpm ef reproduce` cannot replay B's answers (`CacheMissError`), so the published BLOCK no longer matches the prompt in the repo ([failed run](https://github.com/shisukeUrahara/evalforge/actions/runs/41973469585)). Reverting the edit turns CI green again ([passing run](https://github.com/shisukeUrahara/evalforge/actions/runs/41973696325)).
+
 ## Switching models
 
 All model calls go through one LangChain.js layer ([ADR 0004](docs/adr/0004-langchain-layer.md)). Another OpenAI model: edit a `spec` in [`config/models.json`](config/models.json) and add a `pricing.json` row. Another provider: install `@langchain/<provider>`, add its key and a price, change the spec, and re-run `src/core/llm/spike.test.ts` first. What LangChain really does (and where it drops raw output) is in [docs/langchain_notes.md](docs/langchain_notes.md).
