@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { UserSwitch } from "@/components/UserSwitch";
+import { pageUser } from "./_lib/session";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
 const mono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -20,6 +22,7 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const user = await pageUser();
   return (
     <html lang="en" suppressHydrationWarning className={`${geist.variable} ${mono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
@@ -27,7 +30,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-surface focus:px-3 focus:py-2">
             Skip to content
           </a>
-          <Nav />
+          <Nav userSwitch={<UserSwitch user={user} />} />
           <main id="main" className="mx-auto w-full max-w-[1400px] flex-1 px-4 pb-10 pt-6 md:px-6 md:pb-12 md:pt-8">
             {children}
           </main>
