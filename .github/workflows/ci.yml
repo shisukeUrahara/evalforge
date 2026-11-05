@@ -20,4 +20,8 @@ jobs:
       - run: pnpm test
       - name: Sources match their checksums
         run: pnpm ef verify
+      - name: Every run, metric and gate decision reproduces with no API key
+        run: pnpm ef reproduce
+        env:
+          OPENAI_API_KEY: ""
       - run: pnpm build
