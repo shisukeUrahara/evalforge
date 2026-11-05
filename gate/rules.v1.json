@@ -1,0 +1,23 @@
+{
+  "version": "v1",
+  "note": "Pre-registered before the holdout run. Changing any value is a new rules version and voids existing waivers.",
+  "case_pass": "schema-valid AND every deterministic and expected check passes AND zero unsupported or uncertain material claims; repeats pooled by majority (pass) and median (unsupported count)",
+  "dropped": "a case with a transport failure or a judge error in any arm is dropped from every arm",
+  "critical": {
+    "context_mismatch": "baseline and candidate saw different frozen context for any case",
+    "case_mismatch": "baseline and candidate ran on different case sets or datasets",
+    "critical_unsupported_claim": { "min_cases": 1, "rule": "on a critical case, the candidate's median unsupported material claims exceed the baseline's" },
+    "schema_regression": { "min_cases": 1, "rule": "a case schema-valid for the baseline and schema-invalid for the candidate" },
+    "judge_incomplete": { "max_judge_dropped": 1, "rule": "more than this many cases dropped for judge errors" }
+  },
+  "priority": {
+    "regression_count": { "categories": ["store_policy", "negative"], "min": 2, "noise_margin": 1, "rule": "cases the baseline passes and the candidate fails, in these categories, >= max(min, null-run flips + noise_margin)" }
+  },
+  "warn": {
+    "parity_mismatch": "candidate has more mismatched parity pairs than the baseline",
+    "latency_p95_up_pct": 25,
+    "cost_up_pct": 25
+  },
+  "trust_bar": { "kappa": 0.6, "recall": 0.8, "min_unsupported": 15, "extraction_miss": 0.1, "canary_recall": 0.9, "control_fpr": 0.2 },
+  "judge_trust": "if the trust bar is not met, a critical failure decided only by judge labels becomes pending_confirm until a human confirms each case"
+}
