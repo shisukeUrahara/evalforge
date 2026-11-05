@@ -12,6 +12,7 @@ import { judge } from "./commands/judge";
 import { applyLabels, labelSheet } from "./commands/labels";
 import { report } from "./commands/report";
 import { run } from "./commands/run";
+import { trust } from "./commands/trust";
 import { confirm, waive } from "./commands/waive";
 import { verify } from "./commands/verify";
 import { EXIT } from "./exit";
@@ -32,6 +33,7 @@ export const COMMANDS: Record<string, Command> = {
   waive,
   confirm,
   gate,
+  trust,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
