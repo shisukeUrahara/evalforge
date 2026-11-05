@@ -2,12 +2,27 @@ import Link from "next/link";
 import { ArmDot } from "@/components/Arm";
 import { Card } from "@/components/ui/Card";
 import { Pill } from "@/components/ui/Pill";
+import type { FinalClaim } from "@/core/score/labels";
 import type { AnswerView, ComparisonView } from "@/core/views/comparison";
+import { segments } from "./highlight";
+
+const VERDICT = { supported: "success", unsupported: "danger", uncertain: "warn" } as const;
+const UNDERLINE = { supported: "decoration-success", unsupported: "decoration-danger", uncertain: "decoration-warn" } as const;
+
+/** One claim: verdict pill, the claim text, and who decided it (judge or human). */
+function ClaimLine({ c }: { c: FinalClaim }) {
+  return (
+    <li className="fade-up flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm">
+      <Pill tone={VERDICT[c.verdict]}>{c.verdict}</Pill>
+      <span className="min-w-0 flex-1 text-xs text-muted">{c.text}</span>
+      <span className="font-mono text-[10px] uppercase tracking-wider text-muted">{c.source}</span>
+    </li>
+  );
+}
 
 type Selected = NonNullable<ComparisonView["selected"]>;
 
-export const compareHref = (q: { run: string; case?: string; only?: string }) =>
-  "/compare?" + new URLSearchParams(Object.entries(q).filter((e): e is [string, string] => !!e[1])).toString();
+export const compareHref = (q: { run: string; case?: string; only?: string }) => "/compare?" + new URLSearchParams(Object.entries(q).filter((e): e is [string, string] => !!e[1])).toString();
 
 export function QuestionCard({ s }: { s: Selected }) {
   return (
@@ -34,12 +49,35 @@ export function AnswerColumn({ a, unsupported }: { a: AnswerView; unsupported: n
         <Pill tone={a.pass ? "success" : "danger"}>{a.pass ? "pass" : "fail"}</Pill>
       </header>
       <div className="rounded-xl bg-surface-2 p-3 text-[15px] leading-relaxed">
-        {a.answer ?? (
+        {a.answer !== null ? (
+          segments(
+            a.answer,
+            a.claims.filter((c) => c.material),
+          ).map((seg, i) =>
+            seg.claim ? (
+              <mark key={i} title={`${seg.claim.verdict} (${seg.claim.source})`} className={`bg-transparent text-ink underline decoration-2 underline-offset-4 ${UNDERLINE[seg.claim.verdict]}`}>
+                {seg.text}
+              </mark>
+            ) : (
+              <span key={i}>{seg.text}</span>
+            ),
+          )
+        ) : (
           <span className="text-danger">
             No valid answer (<span className="font-mono">{a.output_code}</span>)
           </span>
         )}
       </div>
+      {a.claims.some((c) => c.material) && (
+        <ul aria-label="Material claims" className="space-y-2">
+          {a.claims
+            .filter((c) => c.material)
+            .map((c, i) => (
+              <ClaimLine key={i} c={c} />
+            ))}
+        </ul>
+      )}
+      {a.claims.some((c) => !c.material) && <p className="text-xs text-muted">+ {a.claims.filter((c) => !c.material).length} non-material claim(s), not scored</p>}
       <dl className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs">
         <div className="flex items-center gap-1.5">
           <dt className="text-muted">refused:</dt>
@@ -121,34 +159,58 @@ export function Provenance({ v }: { v: ComparisonView }) {
   );
 }
 
+/** Case list with the "regressions only" filter (?only=reg). */
 export function CaseList({ v, only }: { v: ComparisonView; only?: string }) {
   const s = v.selected!;
   const cand = s.candidate.arm;
+  const reg = only === "reg";
+  const rows = reg ? v.rows.filter((r) => r.regression) : v.rows;
   return (
-    <ul className="divide-y divide-line">
-      {v.rows.map((r) => (
-        <li key={r.case_id}>
-          <Link
-            href={compareHref({ run: v.run_id, case: r.case_id, only })}
-            aria-current={r.case_id === s.case.id ? "page" : undefined}
-            className="flex min-h-11 items-center justify-between gap-2 border-l-2 border-transparent px-3 py-2.5 hover:bg-surface-2 aria-[current=page]:border-brand aria-[current=page]:bg-brand-bg/60"
-          >
-            <span className="min-w-0">
-              <span className="flex items-center gap-1.5 font-mono text-sm">
-                {r.case_id}
-                {r.critical && <span className="text-[10px] text-danger">crit</span>}
+    <section aria-label="Cases" className="overflow-hidden rounded-[20px] border border-line bg-surface/85 shadow-card">
+      <header className="flex items-center justify-between gap-2 px-4 pb-2 pt-4">
+        <h2 className="font-display text-base font-medium">Cases</h2>
+        <Link
+          href={compareHref({ run: v.run_id, case: s.case.id, only: reg ? undefined : "reg" })}
+          aria-current={reg ? "true" : undefined}
+          className="flex min-h-9 items-center gap-2 text-xs text-muted hover:text-ink aria-[current=true]:text-brand"
+        >
+          <span aria-hidden className={`grid size-4 place-items-center rounded border ${reg ? "border-brand bg-brand text-primary-ink" : "border-line"}`}>
+            {reg ? "✓" : ""}
+          </span>
+          Regressions only
+        </Link>
+      </header>
+      <ul className="divide-y divide-line lg:max-h-[calc(100dvh-14rem)] lg:overflow-y-auto">
+        {rows.map((r) => (
+          <li key={r.case_id}>
+            <Link
+              href={compareHref({ run: v.run_id, case: r.case_id, only })}
+              aria-current={r.case_id === s.case.id ? "page" : undefined}
+              className="flex min-h-11 items-center justify-between gap-2 border-l-2 border-transparent px-3 py-2.5 hover:bg-surface-2 aria-[current=page]:border-brand aria-[current=page]:bg-brand-bg/60"
+            >
+              <span className="min-w-0">
+                <span className="flex items-center gap-1.5 font-mono text-sm">
+                  {r.case_id}
+                  {r.critical && <span className="text-[10px] text-danger">crit</span>}
+                </span>
+                <span className="block truncate text-xs text-muted">{r.category}</span>
               </span>
-              <span className="block truncate text-xs text-muted">{r.category}</span>
-            </span>
-            <span className="shrink-0 text-right font-mono text-[11px] text-muted">
-              <span className="block">A {r.base_pass ? "pass" : "fail"}</span>
-              <span className={`block ${r.regression ? "text-danger" : ""}`}>
-                {cand} {r.cand_pass ? "pass" : "fail"}
+              <span className="flex shrink-0 items-center gap-2 font-mono text-[11px] text-muted">
+                <span aria-hidden className="flex gap-1">
+                  <span className={`size-2 rounded-full ${r.base_pass ? "bg-success" : "bg-danger"}`} />
+                  <span className={`size-2 rounded-full ${r.cand_pass ? "bg-success" : "bg-danger"}`} />
+                </span>
+                <span className={r.regression ? "text-danger" : ""}>
+                  A {r.base_pass ? "pass" : "fail"} · {cand} {r.cand_pass ? "pass" : "fail"}
+                </span>
               </span>
-            </span>
-          </Link>
-        </li>
-      ))}
-    </ul>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <p className="border-t border-line px-4 py-2 font-mono text-xs text-muted">
+        {rows.length} of {v.rows.length} cases{reg ? " (regressions)" : ""}
+      </p>
+    </section>
   );
 }

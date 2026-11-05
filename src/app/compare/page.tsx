@@ -35,12 +35,9 @@ export default async function ComparePage({ searchParams }: PageProps<"/compare"
     <div>
       <VersionStrip v={v.version} />
       <div className="grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)_20rem] xl:grid-cols-[17rem_minmax(0,1fr)_22rem]">
-        <div className="min-w-0">
+        <div className="min-w-0 lg:sticky lg:top-20 lg:self-start">
           <Drawer label={`Cases (${v.rows.length})`}>
-            <section aria-label="Cases" className="overflow-hidden rounded-[20px] border border-line bg-surface/85 shadow-card">
-              <h2 className="px-4 pb-2 pt-4 font-display text-base font-medium">Cases</h2>
-              <CaseList v={v} />
-            </section>
+            <CaseList v={v} only={one(sp.only)} />
           </Drawer>
         </div>
         <div className="min-w-0 space-y-4">

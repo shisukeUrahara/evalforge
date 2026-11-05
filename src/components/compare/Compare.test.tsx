@@ -3,7 +3,7 @@ import { expect, test } from "vitest";
 import { Drawer } from "@/components/Drawer";
 import { comparisonView } from "@/core/views/comparison";
 import { gateView } from "@/core/views/gate";
-import { AnswerColumn, compareHref, Provenance, QuestionCard } from "./Compare";
+import { AnswerColumn, CaseList, compareHref, Provenance, QuestionCard } from "./Compare";
 
 const cwd = process.cwd();
 const v = comparisonView(cwd, gateView(cwd)!.selected.run_id);
@@ -41,4 +41,22 @@ test("compareHref drops empty params; the drawer opens and closes as a sheet", (
   expect(button).toHaveAttribute("aria-expanded", "true");
   fireEvent.click(screen.getByRole("button", { name: "Close" }));
   expect(button).toHaveAttribute("aria-expanded", "false");
+});
+
+test("claims are underlined by verdict and listed with their source; the filter keeps regressions only", () => {
+  const withClaims = comparisonView(cwd, v.run_id, "c042").selected!.candidate;
+  render(<AnswerColumn a={withClaims} unsupported={2} />);
+  const list = screen.getByRole("list", { name: "Material claims" });
+  expect(within(list).getAllByText("unsupported").length).toBeGreaterThan(0);
+  expect(within(list).getAllByText("judge").length).toBe(withClaims.claims.filter((c) => c.material).length);
+  expect(document.querySelector("mark.decoration-danger")).not.toBeNull();
+});
+
+test("regressions only lists the 8 regressions and links keep the filter", () => {
+  render(<CaseList v={v} only="reg" />);
+  const links = within(screen.getByRole("region", { name: "Cases" })).getAllByRole("link");
+  expect(links[0]).toHaveAttribute("href", `/compare?run=${v.run_id}&case=${s.case.id}`);
+  expect(links.slice(1)).toHaveLength(v.rows.filter((r) => r.regression).length);
+  expect(links[1].getAttribute("href")).toContain("only=reg");
+  expect(screen.getByText(/of 50 cases \(regressions\)/)).toBeInTheDocument();
 });
