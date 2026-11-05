@@ -16,6 +16,8 @@ Two-day build, 4–5 Nov 2026. Plan: 78 commits over 2 days, brainstormed with f
 - Canaries 30/30. `ef reproduce`: 6 runs, 1,240 answers, byte-identical gates with no key, in CI.
 - UI built to the approved screens by a builder agent; docs and content.
 - Total model cost: $2.25.
+- CI fail-to-pass demo: PR #1 edited gated prompt B in place; `ef reproduce` failed with CacheMissError; the revert passed. One slip on the way: a broken shell chain closed the PR with a comment claiming the revert had passed before it had; the PR was reopened, the revert run, and the claim confirmed with run ids.
+- Fresh-clone check (5 Nov): `git clone` → `EF_PORT=3021 docker compose up --build` with no `.env`: `/` shows BLOCK for B and SHIP for `?c=M`, `/compare` and `/judge` render, `/runs/<id>/gate.json` downloads, unknown paths 404, and the clone stayed clean (`git status` empty).
 
 ## After the build
 - Owner labels 20 tuning + 40 holdout answers; `ef trust`, `ef compare-gates`, re-gate, update analysis and content.
