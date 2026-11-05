@@ -19,6 +19,9 @@ export interface TrustFile {
   trusted: boolean;
   /** Answers a human found fully supported, used as controls. */
   controls: string[];
+  /** Human (rows) vs judge (columns), labels supported / unsupported / uncertain; claims the judge missed are not in it. */
+  confusion: number[][];
+  disagreements: { case_id: string; arm: string; text: string; human: string; judge: string | null }[];
 }
 
 /** random_half per labeled answer, from the label sheet keys. */
@@ -50,14 +53,22 @@ export function trustFor(dataDir: string, judge: string, set: string, runIds: re
   }
   const random = sheetKeys(dataDir);
   const claims: LabeledClaim[] = [];
+  const disagreements: TrustFile["disagreements"] = [];
   const controls: string[] = [];
   let controlAlarms = 0;
   for (const l of labels) {
     const j = judgments.get(answerKey(l))?.output;
     if (!j) continue;
     const rh = random.get(answerKey(l)) ?? false;
-    for (const h of l.claims) claims.push({ human: h.verdict, judge: j.claims[h.index]?.verdict ?? null, material: h.material, random_half: rh });
-    for (const m of l.missed) claims.push({ human: m.verdict, judge: null, material: true, random_half: rh });
+    for (const h of l.claims) {
+      const jv = j.claims[h.index]?.verdict ?? null;
+      claims.push({ human: h.verdict, judge: jv, material: h.material, random_half: rh });
+      if (jv !== h.verdict) disagreements.push({ case_id: l.case_id, arm: l.arm, text: j.claims[h.index]?.text ?? "", human: h.verdict, judge: jv });
+    }
+    for (const m of l.missed) {
+      claims.push({ human: m.verdict, judge: null, material: true, random_half: rh });
+      disagreements.push({ case_id: l.case_id, arm: l.arm, text: m.text, human: m.verdict, judge: null });
+    }
     const clean = l.missed.length === 0 && l.claims.every((c) => !c.material || c.verdict === "supported");
     if (clean && controls.length < 15) {
       controls.push(answerKey(l));
@@ -68,5 +79,7 @@ export function trustFor(dataDir: string, judge: string, set: string, runIds: re
   const can = existsSync(canFile) ? readFileSync(canFile, "utf8").trim().split("\n").map((x) => JSON.parse(x) as { kind: string; caught: boolean | null }) : [];
   const real = can.filter((c) => c.kind !== "control");
   const report = trustReport(claims, { caught: real.filter((c) => c.caught).length, total: real.length }, { flagged: controlAlarms, total: controls.length });
-  return { judge, set, labels_head: labelsHead, answers_labeled: labels.length, claims_labeled: claims.length, lines: report.lines, trusted: report.trusted, controls };
+  const V = ["supported", "unsupported", "uncertain"];
+  const confusion = V.map((h) => V.map((jv) => claims.filter((c) => c.human === h && c.judge === jv).length));
+  return { judge, set, labels_head: labelsHead, answers_labeled: labels.length, claims_labeled: claims.length, lines: report.lines, trusted: report.trusted, controls, confusion, disagreements };
 }
