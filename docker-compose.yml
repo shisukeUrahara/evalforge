@@ -16,3 +16,5 @@ services:
       - ./cache:/data/cache
       - ./runs:/data/runs
       - ./gate:/data/gate
+      # Re-running the gate after a waiver or confirm reads the prices.
+      - ./pricing.json:/data/pricing.json:ro
