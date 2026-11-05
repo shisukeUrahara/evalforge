@@ -1,0 +1,100 @@
+{
+  "run_id": "20261105T043647Z-holdout-A2",
+  "kind": "answers",
+  "created_at_utc": "2026-11-05T04:36:47.510Z",
+  "split": "holdout",
+  "dataset": "support-v1",
+  "dataset_sha": "d6f7e2a45dfe82ca0deace01aa852860692173fcf6a7a09c824111e9470bab26",
+  "policy_version": "v1",
+  "sample_count": 50,
+  "repetitions": 3,
+  "concurrency": 4,
+  "arms": [
+    {
+      "arm": "A",
+      "prompt": "A.v1",
+      "prompt_sha": "449a38496cac18d6b4a696f59753dab98a23c491c10bf693123297e54ec6e7b5",
+      "model": {
+        "spec": "openai:gpt-4.1-mini-2025-04-14",
+        "method": "jsonSchema",
+        "params": {
+          "temperature": 0,
+          "maxTokens": 400
+        }
+      }
+    },
+    {
+      "arm": "A2",
+      "prompt": "A.v1",
+      "prompt_sha": "449a38496cac18d6b4a696f59753dab98a23c491c10bf693123297e54ec6e7b5",
+      "model": {
+        "spec": "openai:gpt-4.1-mini-2025-04-14",
+        "method": "jsonSchema",
+        "params": {
+          "temperature": 0,
+          "maxTokens": 400
+        }
+      }
+    }
+  ],
+  "context_refs": {
+    "c001": "ctx_14f65650308d",
+    "c003": "ctx_d207e5c72763",
+    "c007": "ctx_63ac82857905",
+    "c008": "ctx_fd33f34d6591",
+    "c010": "ctx_81be524fb422",
+    "c011": "ctx_d37f6c362cf6",
+    "c012": "ctx_734b6ca6fa2e",
+    "c014": "ctx_6f38acc3a823",
+    "c015": "ctx_4234683f50ce",
+    "c016": "ctx_35e449c2ce2f",
+    "c017": "ctx_6e4cb88e7c8b",
+    "c018": "ctx_62042545d206",
+    "c019": "ctx_14f65650308d",
+    "c021": "ctx_7e03c4b8d59a",
+    "c022": "ctx_0186ad1ac577",
+    "c025": "ctx_ab30d049ce13",
+    "c027": "ctx_a3ceee15d0f1",
+    "c028": "ctx_7a90d2d05619",
+    "c029": "ctx_ae6ada9e2079",
+    "c030": "ctx_d92493322b20",
+    "c031": "ctx_438b46d7852a",
+    "c033": "ctx_f56eed9d0f4b",
+    "c035": "ctx_d8862a6322f3",
+    "c036": "ctx_17ef67bb9660",
+    "c037": "ctx_7a90d2d05619",
+    "c040": "ctx_2941335b8f85",
+    "c041": "ctx_ca7f204346dd",
+    "c042": "ctx_ca7f204346dd",
+    "c046": "ctx_fa177134363b",
+    "c049": "ctx_ca7f204346dd",
+    "c050": "ctx_fa177134363b",
+    "c053": "ctx_d207e5c72763",
+    "c054": "ctx_2401f9d99896",
+    "c055": "ctx_fa177134363b",
+    "c056": "ctx_d207e5c72763",
+    "c058": "ctx_1669cb893e2b",
+    "c059": "ctx_1669cb893e2b",
+    "c060": "ctx_ca7f204346dd",
+    "c061": "ctx_0186ad1ac577",
+    "c062": "ctx_0186ad1ac577",
+    "c065": "ctx_1d13a4f3a98f",
+    "c066": "ctx_1d13a4f3a98f",
+    "c071": "ctx_7e03c4b8d59a",
+    "c072": "ctx_7e03c4b8d59a",
+    "c073": "ctx_d92493322b20",
+    "c074": "ctx_d92493322b20",
+    "c075": "ctx_439199cabaaa",
+    "c076": "ctx_439199cabaaa",
+    "c079": "ctx_5a3b4a37f34f",
+    "c080": "ctx_5a3b4a37f34f"
+  },
+  "git_sha": "9a7cadcb0606379f8958c34540cd7d991954adf7",
+  "git_dirty": false,
+  "allow_dirty": false,
+  "replay": false,
+  "cache_hits": 150,
+  "cache_misses": 150,
+  "usd": 0.03820920000000004,
+  "limitations": "Synthetic cases (LLM-drafted, model-reviewed). Temperature 0 with strict structured output. One provider family. Small N: report counts, not only rates."
+}
