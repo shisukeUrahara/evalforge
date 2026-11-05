@@ -3,13 +3,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
 import { ConfirmForm, WaiveForm } from "@/components/gate/Actions";
-import { Empty } from "@/components/StateViews";
+import { Empty, Notice } from "@/components/StateViews";
 import { CandidateSwitch, caseHref, CheckRow, TrustRow, VerdictBanner } from "@/components/gate/Gate";
 import { Card } from "@/components/ui/Card";
 import { Pill } from "@/components/ui/Pill";
 import { VersionStrip } from "@/components/VersionStrip";
 import { gateView } from "@/core/views/gate";
 import { dataDir, one } from "./_lib/data";
+import { labelsChangedSince } from "./_lib/stale";
 import { confirmAction, waiveAction } from "./actions";
 
 export const metadata: Metadata = { title: "Release gate" };
@@ -28,6 +29,7 @@ export default async function GatePage({ searchParams }: PageProps<"/">) {
     );
   }
   const run = v.selected.run_id;
+  const stale = labelsChangedSince(dataDir(), v.gate_file);
   const failing = v.tiers.flatMap((t) => t.checks).find((c) => c.status !== "pass" && c.status !== "warn" && c.case_ids.length > 0);
   return (
     <div>
@@ -35,6 +37,12 @@ export default async function GatePage({ searchParams }: PageProps<"/">) {
       <div className="grid gap-6 lg:grid-cols-12">
         <div className="min-w-0 space-y-6 lg:col-span-8">
           <CandidateSwitch v={v} />
+          {stale && (
+            <Notice>
+              Labels changed since this gate ran — run <code className="font-mono">pnpm ef gate --run {run}</code> again.
+            </Notice>
+          )}
+          {v.decision === "pending_confirm" && <Notice>Waiting for a human: {v.counts.pending} critical check(s) were flagged by the judge alone, and the judge is not trusted yet. lee confirms each case below.</Notice>}
           <VerdictBanner v={v} />
           <Card title="Checks" action={<span className="font-mono text-xs text-muted">grouped by tier</span>}>
             <div className="space-y-6">
