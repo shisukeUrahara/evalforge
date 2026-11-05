@@ -30,6 +30,10 @@ test("candidates resolve to arms: prompt change, model swap, null run", () => {
   ]);
   expect(resolveArms(process.cwd(), roles, "A.v1", "model:swap")[1]).toMatchObject({ arm: "M", role: roles.swap });
   expect(resolveArms(process.cwd(), roles, "A.v1", "null")[1].arm).toBe("A2");
+  expect(resolveArms(process.cwd(), roles, "A.v1", "null:swap").map((a) => [a.arm, a.role.spec])).toEqual([
+    ["M", roles.swap.spec],
+    ["M2", roles.swap.spec],
+  ]);
   expect(() => resolveArms(process.cwd(), roles, "A.v1", "prompt:A.v1")).toThrow(/--candidate/);
 });
 
