@@ -1,0 +1,97 @@
+{
+  "run_id": "20261105T043804Z-holdout-M",
+  "judge": "claims.v1",
+  "labels_head": {
+    "lines": 0,
+    "sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "baseline": "A",
+  "candidate": "M",
+  "dropped": {
+    "transport": [],
+    "judge": []
+  },
+  "arms": [
+    {
+      "arm": "A",
+      "cases": 50,
+      "pass": 44,
+      "unsupported_per_answer": 0,
+      "critical": {
+        "api_fact": [
+          5,
+          5
+        ],
+        "store_policy": [
+          6,
+          6
+        ]
+      },
+      "claims": {
+        "supported": 269,
+        "unsupported": 0,
+        "uncertain": 0
+      },
+      "claim_precision": 1,
+      "schema_ok": 50,
+      "parity_mismatches": 0,
+      "parity_pairs": 6,
+      "latency_ms": {
+        "mean": 1131.7666666666667,
+        "p50": 1073,
+        "p95": 1429
+      },
+      "usd_per_answer": 0.0002538960000000002,
+      "label_sources": {
+        "judge": 50
+      }
+    },
+    {
+      "arm": "M",
+      "cases": 50,
+      "pass": 45,
+      "unsupported_per_answer": 0.006666666666666667,
+      "critical": {
+        "api_fact": [
+          4,
+          5
+        ],
+        "store_policy": [
+          6,
+          6
+        ]
+      },
+      "claims": {
+        "supported": 209,
+        "unsupported": 1,
+        "uncertain": 0
+      },
+      "claim_precision": 0.9952380952380953,
+      "schema_ok": 50,
+      "parity_mismatches": 0,
+      "parity_pairs": 6,
+      "latency_ms": {
+        "mean": 1233.54,
+        "p50": 1205,
+        "p95": 1528
+      },
+      "usd_per_answer": 0.00008970299999999996,
+      "label_sources": {
+        "judge": 47,
+        "mixed": 1,
+        "deterministic": 2
+      }
+    }
+  ],
+  "regressions": {
+    "all": [
+      "c003",
+      "c049"
+    ],
+    "gated": [
+      "c049"
+    ]
+  },
+  "critical_unsupported": [],
+  "schema_regressions": []
+}

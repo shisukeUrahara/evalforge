@@ -1,0 +1,106 @@
+{
+  "run_id": "20261105T043553Z-holdout-B",
+  "judge": "claims.v1",
+  "labels_head": {
+    "lines": 0,
+    "sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "baseline": "A",
+  "candidate": "B",
+  "dropped": {
+    "transport": [],
+    "judge": []
+  },
+  "arms": [
+    {
+      "arm": "A",
+      "cases": 50,
+      "pass": 44,
+      "unsupported_per_answer": 0,
+      "critical": {
+        "api_fact": [
+          5,
+          5
+        ],
+        "store_policy": [
+          6,
+          6
+        ]
+      },
+      "claims": {
+        "supported": 269,
+        "unsupported": 0,
+        "uncertain": 0
+      },
+      "claim_precision": 1,
+      "schema_ok": 50,
+      "parity_mismatches": 0,
+      "parity_pairs": 6,
+      "latency_ms": {
+        "mean": 1131.7666666666667,
+        "p50": 1073,
+        "p95": 1429
+      },
+      "usd_per_answer": 0.0002538960000000002,
+      "label_sources": {
+        "judge": 50
+      }
+    },
+    {
+      "arm": "B",
+      "cases": 50,
+      "pass": 36,
+      "unsupported_per_answer": 0.16,
+      "critical": {
+        "api_fact": [
+          5,
+          5
+        ],
+        "store_policy": [
+          6,
+          6
+        ]
+      },
+      "claims": {
+        "supported": 334,
+        "unsupported": 24,
+        "uncertain": 0
+      },
+      "claim_precision": 0.9329608938547486,
+      "schema_ok": 50,
+      "parity_mismatches": 0,
+      "parity_pairs": 6,
+      "latency_ms": {
+        "mean": 1384.0866666666666,
+        "p50": 1341,
+        "p95": 1640
+      },
+      "usd_per_answer": 0.00029919200000000005,
+      "label_sources": {
+        "judge": 50
+      }
+    }
+  ],
+  "regressions": {
+    "all": [
+      "c042",
+      "c049",
+      "c053",
+      "c054",
+      "c055",
+      "c059",
+      "c075",
+      "c076"
+    ],
+    "gated": [
+      "c042",
+      "c049",
+      "c053",
+      "c054",
+      "c055",
+      "c059"
+    ]
+  },
+  "critical_unsupported": [],
+  "schema_regressions": []
+}
