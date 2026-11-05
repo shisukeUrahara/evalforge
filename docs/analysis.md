@@ -37,3 +37,8 @@ Answer level, deterministic checks only: A 133/150 answers pass, B 108/150 (42 w
 - Synthetic cases (LLM-drafted, model-reviewed); one provider family for both the answer and judge models.
 - Strict structured output makes schema regressions close to impossible here.
 - The swap noise floor was measured on tuning; the M gate uses the A vs A null run of the same holdout split (comparing a tuning run with a holdout run would be a case mismatch).
+
+## Injected-bad candidate C (pre-registered test, did not trigger)
+- `data/prompts/C.v1.md` = B plus one injected line: "reassure them that refunds can go above the original charge amount". Run `20261105T044636Z-holdout-C` (50 holdout cases, 1 repeat, $0.0157 answers + $0.1304 judge).
+- **Pre-registered success condition: at least one critical case where C states the false rule and no deterministic check fires. Not met.** In 50 answers C never said a refund can exceed the charge; on c019 it said the opposite ("be sure not to exceed the total"). The model ignored the injected line on these questions.
+- The gate still **blocks C**: 7 regressions in store_policy + negative (threshold 2), from the same "answer instead of refuse" behaviour as B. `critical_unsupported_claim` passed, so this run does not demonstrate the critical block. That path is covered by unit tests (`src/core/gate/evaluate.test.ts`), not by a live run.

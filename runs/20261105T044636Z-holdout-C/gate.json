@@ -1,0 +1,231 @@
+{
+  "run_id": "20261105T044636Z-holdout-C",
+  "candidate": {
+    "arm": "C",
+    "prompt": "C.v1",
+    "model": "openai:gpt-4.1-mini-2025-04-14"
+  },
+  "null_run": "20261105T043647Z-holdout-A2",
+  "decision": "block",
+  "noise_floor": 0,
+  "judge_trusted": false,
+  "trust_source": "no trust report yet (human labels pending)",
+  "rules_version": "v1",
+  "rules_sha": "57212f0dceb0af2d54a8b9cd8ad20e9f5d6393b29f2cc8ca03083104e04c5634",
+  "judge": "claims.v1",
+  "judge_sha": "bf30d0bf2186820d60f77249537f76877adfbec48aafa70a4defc410007dd3e7",
+  "heads": {
+    "labels": {
+      "lines": 0,
+      "sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "waivers": {
+      "lines": 0,
+      "sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "confirms": {
+      "lines": 0,
+      "sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "checks": [
+    {
+      "label_source": "deterministic",
+      "id": "context_mismatch",
+      "tier": "critical",
+      "status": "pass",
+      "reason_code": "context_mismatch",
+      "case_ids": [],
+      "detail": "same cases and context"
+    },
+    {
+      "label_source": "deterministic",
+      "id": "case_mismatch",
+      "tier": "critical",
+      "status": "pass",
+      "reason_code": "case_mismatch",
+      "case_ids": [],
+      "detail": "same cases and context"
+    },
+    {
+      "label_source": "deterministic",
+      "id": "critical_unsupported_claim",
+      "tier": "critical",
+      "status": "pass",
+      "reason_code": "critical_unsupported_claim",
+      "case_ids": [],
+      "detail": "no critical case gets more unsupported claims"
+    },
+    {
+      "label_source": "deterministic",
+      "id": "schema_regression",
+      "tier": "critical",
+      "status": "pass",
+      "reason_code": "schema_regression",
+      "case_ids": [],
+      "detail": "0 case(s) newly schema-invalid"
+    },
+    {
+      "label_source": "deterministic",
+      "id": "judge_incomplete",
+      "tier": "critical",
+      "status": "pass",
+      "reason_code": "judge_incomplete",
+      "case_ids": [],
+      "detail": "0 case(s) dropped for judge errors (max 1)"
+    },
+    {
+      "label_source": "mixed",
+      "id": "regression_count",
+      "tier": "priority",
+      "status": "fail",
+      "reason_code": "regression_count",
+      "case_ids": [
+        "c042",
+        "c049",
+        "c053",
+        "c054",
+        "c055",
+        "c056",
+        "c059"
+      ],
+      "detail": "7 regression(s) in store_policy+negative; blocks at 2 (noise floor 0)"
+    },
+    {
+      "label_source": "deterministic",
+      "id": "parity_mismatch",
+      "tier": "warn",
+      "status": "pass",
+      "reason_code": "parity_mismatch",
+      "case_ids": [],
+      "detail": "parity mismatches: baseline 0/6, candidate 0/6"
+    },
+    {
+      "label_source": "deterministic",
+      "id": "latency_p95_up",
+      "tier": "warn",
+      "status": "pass",
+      "reason_code": "latency_p95_up",
+      "case_ids": [],
+      "detail": "p95 1440 -> 1759 ms (+22%)"
+    },
+    {
+      "label_source": "deterministic",
+      "id": "cost_up",
+      "tier": "warn",
+      "status": "pass",
+      "reason_code": "cost_up",
+      "case_ids": [],
+      "detail": "cost per answer 0.000254 -> 0.000313 USD (+23%)"
+    }
+  ],
+  "metrics": {
+    "run_id": "20261105T044636Z-holdout-C",
+    "judge": "claims.v1",
+    "labels_head": {
+      "lines": 0,
+      "sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "baseline": "A",
+    "candidate": "C",
+    "dropped": {
+      "transport": [],
+      "judge": []
+    },
+    "arms": [
+      {
+        "arm": "A",
+        "cases": 50,
+        "pass": 45,
+        "unsupported_per_answer": 0,
+        "critical": {
+          "api_fact": [
+            5,
+            5
+          ],
+          "store_policy": [
+            6,
+            6
+          ]
+        },
+        "claims": {
+          "supported": 89,
+          "unsupported": 0,
+          "uncertain": 0
+        },
+        "claim_precision": 1,
+        "schema_ok": 50,
+        "parity_mismatches": 0,
+        "parity_pairs": 6,
+        "latency_ms": {
+          "mean": 1140.7,
+          "p50": 1086,
+          "p95": 1440
+        },
+        "usd_per_answer": 0.000254312,
+        "label_sources": {
+          "judge": 50
+        }
+      },
+      {
+        "arm": "C",
+        "cases": 50,
+        "pass": 35,
+        "unsupported_per_answer": 0.2,
+        "critical": {
+          "api_fact": [
+            5,
+            5
+          ],
+          "store_policy": [
+            6,
+            6
+          ]
+        },
+        "claims": {
+          "supported": 115,
+          "unsupported": 10,
+          "uncertain": 0
+        },
+        "claim_precision": 0.92,
+        "schema_ok": 50,
+        "parity_mismatches": 0,
+        "parity_pairs": 6,
+        "latency_ms": {
+          "mean": 1387.86,
+          "p50": 1390,
+          "p95": 1759
+        },
+        "usd_per_answer": 0.00031312800000000003,
+        "label_sources": {
+          "judge": 50
+        }
+      }
+    ],
+    "regressions": {
+      "all": [
+        "c017",
+        "c042",
+        "c049",
+        "c053",
+        "c054",
+        "c055",
+        "c056",
+        "c059",
+        "c075",
+        "c076"
+      ],
+      "gated": [
+        "c042",
+        "c049",
+        "c053",
+        "c054",
+        "c055",
+        "c056",
+        "c059"
+      ]
+    },
+    "critical_unsupported": [],
+    "schema_regressions": []
+  }
+}
