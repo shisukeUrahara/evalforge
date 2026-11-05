@@ -1,4 +1,6 @@
 import { DirtyTreeError, PreregistrationError } from "@/core/artifacts/guard";
+import { ForbiddenError } from "@/core/auth/roles";
+import { NotWaivableError } from "@/core/gate/logs";
 import type { Command, Deps } from "./deps";
 import { applyCaseReviewCmd } from "./commands/applyCaseReview";
 import { canaries } from "./commands/canaries";
@@ -9,6 +11,7 @@ import { judge } from "./commands/judge";
 import { applyLabels, labelSheet } from "./commands/labels";
 import { report } from "./commands/report";
 import { run } from "./commands/run";
+import { confirm, waive } from "./commands/waive";
 import { verify } from "./commands/verify";
 import { EXIT } from "./exit";
 
@@ -25,6 +28,8 @@ export const COMMANDS: Record<string, Command> = {
   "label-sheet": labelSheet,
   "apply-labels": applyLabels,
   report,
+  waive,
+  confirm,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
@@ -38,6 +43,10 @@ export async function main(argv: string[], deps: Deps, commands = COMMANDS): Pro
     return await command(rest, deps);
   } catch (e) {
     // A holdout run refused by the guard is an expected outcome, not a crash.
+    if (e instanceof ForbiddenError || e instanceof NotWaivableError) {
+      deps.err(e.message);
+      return EXIT.FORBIDDEN;
+    }
     if (e instanceof DirtyTreeError || e instanceof PreregistrationError) {
       deps.err(e.message);
       return EXIT.DIRTY_TREE;
