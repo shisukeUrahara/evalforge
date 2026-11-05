@@ -2,6 +2,7 @@ import { Crosshair, Download } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
+import { ConfirmForm, WaiveForm } from "@/components/gate/Actions";
 import { Empty } from "@/components/StateViews";
 import { CandidateSwitch, caseHref, CheckRow, TrustRow, VerdictBanner } from "@/components/gate/Gate";
 import { Card } from "@/components/ui/Card";
@@ -9,6 +10,7 @@ import { Pill } from "@/components/ui/Pill";
 import { VersionStrip } from "@/components/VersionStrip";
 import { gateView } from "@/core/views/gate";
 import { dataDir, one } from "./_lib/data";
+import { confirmAction, waiveAction } from "./actions";
 
 export const metadata: Metadata = { title: "Release gate" };
 export const runtime = "nodejs";
@@ -41,7 +43,10 @@ export default async function GatePage({ searchParams }: PageProps<"/">) {
                   <h3 className="micro mb-2">{t.tier} tier</h3>
                   <ul className="space-y-2">
                     {t.checks.map((c) => (
-                      <CheckRow key={c.id} check={c} runId={run} />
+                      <CheckRow key={c.id} check={c} runId={run}>
+                        {c.tier === "priority" && c.status === "fail" && <WaiveForm run={run} check={c.id} action={waiveAction} />}
+                        {c.tier === "critical" && c.status === "pending_confirm" && c.case_ids.map((id) => <ConfirmForm key={id} run={run} caseId={id} action={confirmAction} />)}
+                      </CheckRow>
                     ))}
                   </ul>
                 </section>
