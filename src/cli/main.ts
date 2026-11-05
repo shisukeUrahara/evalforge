@@ -4,6 +4,7 @@ import { NotWaivableError } from "@/core/gate/logs";
 import type { Command, Deps } from "./deps";
 import { applyCaseReviewCmd } from "./commands/applyCaseReview";
 import { canaries } from "./commands/canaries";
+import { compareGatesCmd } from "./commands/compareGates";
 import { doctor } from "./commands/doctor";
 import { draftCases } from "./commands/draftCases";
 import { freezeSplit } from "./commands/freezeSplit";
@@ -34,6 +35,7 @@ export const COMMANDS: Record<string, Command> = {
   confirm,
   gate,
   trust,
+  "compare-gates": compareGatesCmd,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
