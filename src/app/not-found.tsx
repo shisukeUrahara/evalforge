@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LINKS } from "@/components/Nav";
+import { LINKS } from "@/components/links";
 
 export const metadata: Metadata = { title: "Not found" };
 

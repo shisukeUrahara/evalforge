@@ -2,7 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { expect, test, vi } from "vitest";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/compare", useRouter: () => ({ refresh: () => {} }) }));
-import { isActive, Nav } from "./Nav";
+import { isActive } from "./links";
+import { Nav } from "./Nav";
 
 test("marks the current page in both navs", () => {
   render(<Nav />);

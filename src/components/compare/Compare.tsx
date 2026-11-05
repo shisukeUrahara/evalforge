@@ -146,7 +146,7 @@ export function Provenance({ v }: { v: ComparisonView }) {
         {v.prompt_diff.length === 0 ? (
           <p className="text-sm text-muted">Same prompt in both arms: this run changes only the model.</p>
         ) : (
-          <pre aria-label="Prompt diff, baseline to candidate" className="max-h-96 overflow-auto rounded-xl bg-surface-2 p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap">
+          <pre tabIndex={0} aria-label="Prompt diff, baseline to candidate" className="max-h-96 overflow-auto rounded-xl bg-surface-2 p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap">
             {v.prompt_diff.map((l, i) => (
               <span key={i} className={`block ${l.op === "+" ? "text-success" : l.op === "-" ? "text-danger" : "text-muted"}`}>
                 {l.op === " " ? " " : l.op} {l.text}

@@ -1,17 +1,9 @@
 "use client";
-import { Columns2, Scale, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { isActive, LINKS } from "./links";
 import { ThemeToggle } from "./ThemeToggle";
-
-export const LINKS = [
-  { href: "/", label: "Release gate", short: "Gate", icon: ShieldCheck },
-  { href: "/compare", label: "Comparison", short: "Compare", icon: Columns2 },
-  { href: "/judge", label: "Judge audit", short: "Judge", icon: Scale },
-];
-
-export const isActive = (path: string, href: string) => (href === "/" ? path === "/" : path.startsWith(href));
 
 /** Top bar with pill tabs (desktop) and a bottom tab bar with three icons (phone). */
 export function Nav({ userSwitch }: { userSwitch?: ReactNode }) {
