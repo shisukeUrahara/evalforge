@@ -12,6 +12,7 @@ import { gate } from "./commands/gate";
 import { judge } from "./commands/judge";
 import { applyLabels, labelSheet } from "./commands/labels";
 import { report } from "./commands/report";
+import { reproduce } from "./commands/reproduce";
 import { run } from "./commands/run";
 import { trust } from "./commands/trust";
 import { confirm, waive } from "./commands/waive";
@@ -36,6 +37,7 @@ export const COMMANDS: Record<string, Command> = {
   gate,
   trust,
   "compare-gates": compareGatesCmd,
+  reproduce,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
