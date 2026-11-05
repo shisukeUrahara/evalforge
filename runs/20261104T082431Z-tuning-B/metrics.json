@@ -1,0 +1,108 @@
+{
+  "run_id": "20261104T082431Z-tuning-B",
+  "judge": "claims.v1",
+  "labels_head": {
+    "lines": 0,
+    "sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "baseline": "A",
+  "candidate": "B",
+  "dropped": {
+    "transport": [],
+    "judge": []
+  },
+  "arms": [
+    {
+      "arm": "A",
+      "cases": 30,
+      "pass": 27,
+      "unsupported_per_answer": 0.06666666666666667,
+      "critical": {
+        "api_fact": [
+          2,
+          2
+        ],
+        "store_policy": [
+          4,
+          4
+        ]
+      },
+      "claims": {
+        "supported": 51,
+        "unsupported": 2,
+        "uncertain": 0
+      },
+      "claim_precision": 0.9622641509433962,
+      "schema_ok": 30,
+      "parity_mismatches": 0,
+      "parity_pairs": 4,
+      "latency_ms": {
+        "mean": 1267.6,
+        "p50": 1127,
+        "p95": 2160
+      },
+      "usd_per_answer": 0.00025320000000000003,
+      "label_sources": {
+        "judge": 29,
+        "deterministic": 1
+      }
+    },
+    {
+      "arm": "B",
+      "cases": 30,
+      "pass": 20,
+      "unsupported_per_answer": 0.36666666666666664,
+      "critical": {
+        "api_fact": [
+          2,
+          2
+        ],
+        "store_policy": [
+          4,
+          4
+        ]
+      },
+      "claims": {
+        "supported": 62,
+        "unsupported": 11,
+        "uncertain": 0
+      },
+      "claim_precision": 0.8493150684931506,
+      "schema_ok": 30,
+      "parity_mismatches": 0,
+      "parity_pairs": 4,
+      "latency_ms": {
+        "mean": 1590.1333333333334,
+        "p50": 1530,
+        "p95": 1906
+      },
+      "usd_per_answer": 0.00029397333333333327,
+      "label_sources": {
+        "judge": 30
+      }
+    }
+  ],
+  "regressions": {
+    "all": [
+      "c043",
+      "c044",
+      "c048",
+      "c051",
+      "c052",
+      "c077",
+      "c078"
+    ],
+    "gated": [
+      "c043",
+      "c044",
+      "c048",
+      "c051",
+      "c052"
+    ]
+  },
+  "critical_unsupported": [
+    "c048",
+    "c051"
+  ],
+  "schema_regressions": []
+}

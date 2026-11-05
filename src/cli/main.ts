@@ -7,6 +7,7 @@ import { draftCases } from "./commands/draftCases";
 import { freezeSplit } from "./commands/freezeSplit";
 import { judge } from "./commands/judge";
 import { applyLabels, labelSheet } from "./commands/labels";
+import { report } from "./commands/report";
 import { run } from "./commands/run";
 import { verify } from "./commands/verify";
 import { EXIT } from "./exit";
@@ -23,6 +24,7 @@ export const COMMANDS: Record<string, Command> = {
   canaries,
   "label-sheet": labelSheet,
   "apply-labels": applyLabels,
+  report,
 };
 
 export async function main(argv: string[], deps: Deps, commands = COMMANDS): Promise<number> {
