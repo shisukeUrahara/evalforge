@@ -3,11 +3,12 @@
 **A release gate for LLM changes.** Run the old and the new version of a support bot (a new prompt, or a cheaper model) on the same frozen cases, let a judge check every claim in every answer, measure that judge against human labels, and get **ship** or **block** with the exact cases and reason codes.
 
 > Cheaper model (gpt-4.1-mini → gpt-4o-mini, one line in `config/models.json`): cost per answer −65%, 45/50 cases pass (baseline 44) → **SHIP** (`runs/20261105T043804Z-holdout-M`).
-> Friendlier prompt: 36/50 cases pass, 6 regressions above a noise floor of 0 → **BLOCK** (`runs/20261105T043553Z-holdout-B`).
+> Friendlier prompt: 36/50 cases pass, 6 regressions above a noise floor of 0, and one false claim on a critical case that only the human labels caught → **BLOCK**, not waivable (`runs/20261105T043553Z-holdout-B`).
+> The judge itself: κ 0.55 against 119 hand-labeled claims, below the pre-registered 0.6 bar → **not trusted**. It caught 40/40 planted errors but missed 28 of 79 unsupported claims.
 
 ![Release gate](docs/screenshots/gate-dark.png)
 
-Independent portfolio project, not affiliated with Stripe, OpenAI or LangChain. Synthetic cases; see [NOTICE.md](NOTICE.md). Judge numbers are judge-only until the human labels are in ([docs/analysis.md](docs/analysis.md)).
+Independent portfolio project, not affiliated with Stripe, OpenAI or LangChain. Synthetic cases; see [NOTICE.md](NOTICE.md). 60 answers were labeled by hand; everything else is the judge's verdict ([docs/analysis.md](docs/analysis.md)).
 
 ## Quick start (no API key)
 
@@ -38,14 +39,14 @@ Live runs need `OPENAI_API_KEY` in `.env` and are capped by `--max-usd`.
 
 ## Results (holdout, 50 cases × 3 repeats)
 
-| Arm | Cases pass | Unsupported claims / answer (judge-only) | Cost / answer | p95 latency | Gate |
+| Arm | Cases pass | Unsupported claims / answer | Cost / answer | p95 latency | Gate |
 |---|---|---|---|---|---|
-| A strict prompt (baseline) | 44 / 50 | 0.00 | $0.000254 | 1429 ms | — |
-| B friendlier prompt | 36 / 50 | 0.16 | $0.000299 | 1640 ms | **BLOCK** |
-| M gpt-4o-mini | 45 / 50 | 0.01 | $0.000090 | 1528 ms | **SHIP** |
-| C injected false rule (test only) | 35 / 50 | 0.20 | $0.000313 | 1759 ms | **BLOCK** |
+| A strict prompt (baseline) | 44 / 50 | 0.01 | $0.000254 | 1429 ms | — |
+| B friendlier prompt | 36 / 50 | 0.36 | $0.000299 | 1640 ms | **BLOCK** |
+| M gpt-4o-mini | 45 / 50 | 0.01 (judge-only) | $0.000090 | 1528 ms | **SHIP** |
+| C injected false rule (test only) | 35 / 50 | 0.20 (judge-only) | $0.000313 | 1759 ms | **BLOCK** |
 
-Read [docs/analysis.md](docs/analysis.md) for what the averages hide: the cheaper model skipped a citation on a critical case; the injected false rule was never stated (the pre-registered test did not trigger). Canaries caught: 10/10 tuning, 30/30 holdout. Total model cost of the build: $2.25.
+A and B use the hand labels where they exist (40 of B's run answers); M and C are judge-only, and the judge undercounts. Read [docs/analysis.md](docs/analysis.md) for what the averages hide: the judge treats "Stripe does not do X" as supported when the sources are silent; the cheaper model skipped a citation on a critical case; the injected false rule was never stated (the pre-registered test did not trigger). Canaries caught: 10/10 tuning, 30/30 holdout. Total model cost of the build: $2.25.
 
 | Comparison | Judge audit |
 |---|---|
@@ -62,14 +63,14 @@ All model calls go through one LangChain.js layer ([ADR 0004](docs/adr/0004-lang
 ## Evidence packet
 
 - [x] Frozen dataset and run manifests: `data/datasets/support-v1/manifest.json`, `runs/*/manifest.json`
-- [ ] Human grading guide + agreement matrix: [docs/labeling_guide.md](docs/labeling_guide.md); matrix after labeling (`ef trust`)
+- [x] Human grading guide + agreement matrix: [docs/labeling_guide.md](docs/labeling_guide.md), `data/labels/trust-claims.v1.json`, Judge audit page
 - [x] Regressions with their source slices: Comparison page, `runs/*/metrics.json`
 - [x] Paired deltas, failure labels and a CI gate: `runs/*/gate.json`, CI step "reproduces with no API key"
 - [x] Cost, latency and evaluator limits: [docs/analysis.md](docs/analysis.md), [docs/judge_changelog.md](docs/judge_changelog.md), [docs/checks_fp.md](docs/checks_fp.md)
 
 ## Limits
 
-Synthetic cases; 50 holdout cases and 6 parity pairs (counts are shown, not only rates); one human labeler; the judge is the same model family as the bot; temperature-0 noise floor; strict JSON output makes schema regressions near impossible.
+Synthetic cases; 50 holdout cases and 6 parity pairs (counts are shown, not only rates); one human labeler and 60 labeled answers; the judge fails its trust bar; the judge is the same model family as the bot; temperature-0 noise floor; strict JSON output makes schema regressions near impossible.
 
 ## Repo map
 
