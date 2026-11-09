@@ -105,7 +105,7 @@ export function CheckRow({ check, runId, children }: { check: GateCheck; runId: 
 
 const fmt = (x: number | null) => (x === null ? "" : x.toFixed(2));
 
-/** One line of the trust bar. Not estimable means waiting for human labels: no number is shown. */
+/** One line of the trust bar. Not estimable (no labels yet, or too few for the bar): no rate is shown, only n. */
 export function TrustRow({ line }: { line: TrustLine }) {
   const tone = line.status === "pass" ? "success" : line.status === "fail" ? "danger" : "neutral";
   return (
@@ -115,7 +115,7 @@ export function TrustRow({ line }: { line: TrustLine }) {
           <p className="text-sm">{line.name}</p>
           <p className="mt-0.5 font-mono text-xs text-muted">
             needs {line.bar}
-            {line.status !== "not_estimable" && (
+            {(line.status !== "not_estimable" || line.n > 0) && (
               <>
                 {" "}· n={line.n}
                 {line.low !== null && line.high !== null && ` · range ${fmt(line.low)}–${fmt(line.high)}`}
@@ -125,7 +125,7 @@ export function TrustRow({ line }: { line: TrustLine }) {
         </div>
         <div className="flex shrink-0 items-center gap-2">
           {line.value !== null && line.status !== "not_estimable" && <span className="num font-mono text-sm">{fmt(line.value)}</span>}
-          <Pill tone={tone}>{line.status === "not_estimable" ? "waiting for human labels" : line.status}</Pill>
+          <Pill tone={tone}>{line.status !== "not_estimable" ? line.status : line.n === 0 ? "waiting for human labels" : "not estimable"}</Pill>
         </div>
       </div>
       {line.value !== null && line.low !== null && line.high !== null && line.status !== "not_estimable" && (

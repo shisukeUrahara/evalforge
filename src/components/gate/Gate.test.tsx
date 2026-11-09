@@ -31,13 +31,25 @@ test("a failing check links each case to the comparison", () => {
 test("trust lines without labels show no number, only 'waiting for human labels'", () => {
   render(
     <ul>
-      {v.trust.lines.map((l) => (
-        <TrustRow key={l.name} line={l} />
-      ))}
+      <TrustRow line={{ name: "Agreement κ (judge vs human)", value: null, n: 0, low: null, high: null, bar: "≥ 0.6", status: "not_estimable" }} />
+      <TrustRow line={{ name: "Recall on unsupported claims (random half)", value: 0.08, n: 13, low: 0.01, high: 0.33, bar: "≥ 0.8, n ≥ 15", status: "not_estimable" }} />
     </ul>,
   );
   const kappa = screen.getByText("Agreement κ (judge vs human)").closest("li")!;
   expect(within(kappa).getByText("waiting for human labels")).toBeInTheDocument();
   expect(kappa.textContent).not.toMatch(/\d\.\d\d/);
+  const recall = screen.getByText("Recall on unsupported claims (random half)").closest("li")!;
+  expect(within(recall).getByText("not estimable")).toBeInTheDocument();
+  expect(recall).toHaveTextContent("n=13");
+});
+
+test("the committed trust bar shows measured lines", () => {
+  render(
+    <ul>
+      {v.trust.lines.map((l) => (
+        <TrustRow key={l.name} line={l} />
+      ))}
+    </ul>,
+  );
   expect(screen.getByText("Canary recall").closest("li")).toHaveTextContent("1.00");
 });
