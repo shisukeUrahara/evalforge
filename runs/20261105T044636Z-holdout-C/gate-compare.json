@@ -1,0 +1,17 @@
+{
+  "run_id": "20261105T044636Z-holdout-C",
+  "judge_only": {
+    "decision": "block",
+    "failing": [
+      "regression_count:c042,c049,c053,c054,c055,c056,c059"
+    ]
+  },
+  "with_labels": {
+    "decision": "block",
+    "failing": [
+      "regression_count:c042,c049,c053,c054,c055,c056,c059"
+    ],
+    "labels_used": 60
+  },
+  "changed": false
+}
