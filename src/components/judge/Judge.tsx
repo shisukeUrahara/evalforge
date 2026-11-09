@@ -15,7 +15,7 @@ export function ConfusionMatrix({ confusion, claims }: { confusion: number[][]; 
     );
   }
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Judge vs human matrix">
       <table className="w-full min-w-[420px] text-sm">
         <caption className="sr-only">Claims by human label (rows) and judge verdict (columns)</caption>
         <thead>
