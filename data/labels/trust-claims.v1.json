@@ -1,0 +1,289 @@
+{
+  "judge": "claims.v1",
+  "set": "holdout",
+  "labels_head": {
+    "lines": 60,
+    "sha": "3eac47dfc67b2078eb84dcf2c03bbe05dfaac561bcef350f71b17cc726f7b343"
+  },
+  "answers_labeled": 40,
+  "claims_labeled": 119,
+  "lines": [
+    {
+      "name": "Agreement κ (judge vs human)",
+      "value": 0.5504587155963303,
+      "n": 119,
+      "low": null,
+      "high": null,
+      "bar": "≥ 0.6",
+      "status": "fail"
+    },
+    {
+      "name": "Recall on unsupported claims (random half)",
+      "value": 0.07692307692307693,
+      "n": 13,
+      "low": 0.013710421090225994,
+      "high": 0.333139511713605,
+      "bar": "≥ 0.8, n ≥ 15",
+      "status": "not_estimable"
+    },
+    {
+      "name": "Missed claims (extraction)",
+      "value": 0,
+      "n": 94,
+      "low": 0,
+      "high": 0.03926207688661476,
+      "bar": "≤ 0.1",
+      "status": "pass"
+    },
+    {
+      "name": "Canary recall",
+      "value": 1,
+      "n": 30,
+      "low": 0.886486605238548,
+      "high": 1,
+      "bar": "≥ 0.9",
+      "status": "pass"
+    },
+    {
+      "name": "Control false alarms",
+      "value": 0,
+      "n": 14,
+      "low": 0,
+      "high": 0.21531080540298042,
+      "bar": "≤ 0.2",
+      "status": "pass"
+    }
+  ],
+  "trusted": false,
+  "controls": [
+    "c019/A/2",
+    "c035/A/0",
+    "c059/A/2",
+    "c059/A/1",
+    "c040/B/2",
+    "c065/B/0",
+    "c016/A/0",
+    "c022/A/2",
+    "c035/A/2",
+    "c011/A/1",
+    "c029/A/1",
+    "c033/A/1",
+    "c015/A/2",
+    "c017/A/1"
+  ],
+  "confusion": [
+    [
+      40,
+      0,
+      0
+    ],
+    [
+      28,
+      51,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "disagreements": [
+    {
+      "case_id": "c050",
+      "arm": "B",
+      "text": "Stripe itself does not automatically refund any price difference if an item's price drops within 14 days.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c050",
+      "arm": "B",
+      "text": "Refunds must be initiated manually by the merchant using Stripe's refund process, specifying the charge to refund.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c053",
+      "arm": "B",
+      "text": "Stripe itself does not set policies for refunding gifts as store credit.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c053",
+      "arm": "B",
+      "text": "Whether refunds are issued as store credit depends on the merchant's own policy.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c053",
+      "arm": "B",
+      "text": "Northstar Outfitters may have specific refund policies regarding store credit.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c053",
+      "arm": "B",
+      "text": "You should check with the merchant or store where the gift was purchased to understand their refund options.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c046",
+      "arm": "B",
+      "text": "Stripe itself does not automatically block refunds based on an item's sale status.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c046",
+      "arm": "B",
+      "text": "Refund decisions are managed by the merchant's own policies.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c046",
+      "arm": "B",
+      "text": "Stripe itself does not automatically block refunds based on a product's sale status.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c046",
+      "arm": "B",
+      "text": "Refund decisions depend on the merchant's policies.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c046",
+      "arm": "B",
+      "text": "If you are a merchant, you would need to manually handle refund requests for such items through Stripe's refund API by specifying the charge to refund.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c058",
+      "arm": "A",
+      "text": "Stripe does not automatically deduct any fees, including return label fees, from refunds.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c058",
+      "arm": "A",
+      "text": "Refunds are created on charges and return funds to the original payment method without automatic deductions for such fees.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c065",
+      "arm": "B",
+      "text": "Keep an eye on prices during those two weeks to take advantage of this policy!",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c046",
+      "arm": "B",
+      "text": "Stripe itself does not automatically block refunds based on a product's sale status.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c046",
+      "arm": "B",
+      "text": "Refund decisions depend on the merchant's policies.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c046",
+      "arm": "B",
+      "text": "If you are a merchant, you would need to handle such refund restrictions in your own system or customer communication, as Stripe allows refunds unless you choose not to issue them.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c049",
+      "arm": "B",
+      "text": "Stripe itself doesn't set refund amounts based on item condition; it processes refunds as instructed by the merchant.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c055",
+      "arm": "B",
+      "text": "Stripe doesn't guarantee a specific timeframe like 5 business days after a returned item arrives at a warehouse.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c049",
+      "arm": "B",
+      "text": "Stripe itself does not deduct any percentage from refunds; it simply processes the refund amount you specify back to the customer's card.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c060",
+      "arm": "B",
+      "text": "Stripe itself does not enforce any return or refund policies, including a one-year return policy for defective items.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c060",
+      "arm": "B",
+      "text": "If you are dealing with a refund through Stripe, the merchant's own policy will apply.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c055",
+      "arm": "B",
+      "text": "Stripe doesn't guarantee a specific timeframe like 5 business days after a returned item arrives at a warehouse.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c055",
+      "arm": "B",
+      "text": "Stripe doesn't guarantee a specific timeframe like 5 business days after a returned item arrives at a warehouse.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c060",
+      "arm": "B",
+      "text": "Stripe does not enforce any return or refund policies such as a one-year return policy for defective items.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c060",
+      "arm": "B",
+      "text": "Stripe is a payment processing platform that allows merchants to create refunds for charges.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c060",
+      "arm": "B",
+      "text": "The specific return policies are set by the individual merchants or stores.",
+      "human": "unsupported",
+      "judge": "supported"
+    },
+    {
+      "case_id": "c060",
+      "arm": "B",
+      "text": "For questions about return policies, you should check directly with the merchant or store where you made your purchase.",
+      "human": "unsupported",
+      "judge": "supported"
+    }
+  ]
+}
