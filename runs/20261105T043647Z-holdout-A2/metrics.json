@@ -2,8 +2,8 @@
   "run_id": "20261105T043647Z-holdout-A2",
   "judge": "claims.v1",
   "labels_head": {
-    "lines": 0,
-    "sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    "lines": 60,
+    "sha": "3eac47dfc67b2078eb84dcf2c03bbe05dfaac561bcef350f71b17cc726f7b343"
   },
   "baseline": "A",
   "candidate": "A2",

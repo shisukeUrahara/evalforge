@@ -36,7 +36,9 @@ test("only a failing priority check can be waived, with a reason of 10+ characte
 test("lee's waiver is logged and gate.json is rewritten like ef gate, keeping null run and judge", () => {
   const g = waiveCheck(dir, { runId: B, checkId: "regression_count", reason: "tone change accepted for this release", user: "lee", now });
   expect(g.checks.find((c) => c.id === "regression_count")!.status).toBe("failed_waived");
-  expect(g.decision).toBe("ship");
+  // The human-labeled critical failure (c049) is never waivable, so B stays blocked.
+  expect(g.checks.find((c) => c.id === "critical_unsupported_claim")!.status).toBe("fail");
+  expect(g.decision).toBe("block");
   const written = gate();
   expect(written.null_run).toBe(NULL);
   expect(written.judge).toBe("claims.v1");

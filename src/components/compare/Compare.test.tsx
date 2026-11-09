@@ -48,7 +48,7 @@ test("claims are underlined by verdict and listed with their source; the filter 
   render(<AnswerColumn a={withClaims} unsupported={2} />);
   const list = screen.getByRole("list", { name: "Material claims" });
   expect(within(list).getAllByText("unsupported").length).toBeGreaterThan(0);
-  expect(within(list).getAllByText("judge").length).toBe(withClaims.claims.filter((c) => c.material).length);
+  expect(within(list).getAllByText(/^(judge|human)$/).length).toBe(withClaims.claims.filter((c) => c.material).length);
   expect(document.querySelector("mark.decoration-danger")).not.toBeNull();
 });
 

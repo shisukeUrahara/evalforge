@@ -14,12 +14,18 @@ test("canaries show the measured sets with ranges", () => {
 test("no labels: the matrix and disagreements say so instead of showing zeros", () => {
   render(
     <>
-      <ConfusionMatrix confusion={v.trust.confusion} claims={v.trust.claims_labeled} />
-      <Disagreements items={v.trust.disagreements} />
+      <ConfusionMatrix confusion={[[0, 0, 0], [0, 0, 0], [0, 0, 0]]} claims={0} />
+      <Disagreements items={[]} />
     </>,
   );
   expect(screen.getByText(/Waiting for human labels/)).toBeInTheDocument();
   expect(screen.queryByRole("table")).toBeNull();
+});
+
+test("the committed holdout labels fill the matrix", () => {
+  render(<ConfusionMatrix confusion={v.trust.confusion} claims={v.trust.claims_labeled} />);
+  expect(v.trust.claims_labeled).toBeGreaterThan(0);
+  expect(screen.getByRole("table")).toBeInTheDocument();
 });
 
 test("with labels the matrix has human rows and judge columns", () => {
