@@ -22,11 +22,11 @@ test("demo: gate, a blocked case, provenance, C and M, the judge audit", async (
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("BLOCK");
   await page.waitForTimeout(4000);
-  // 0:12 blocked check -> case
+  // 0:12 critical check (human-labeled) -> case
   await scroll(450);
-  await page.waitForTimeout(1500);
-  await page.getByRole("link", { name: "c042" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("chargeback");
+  await page.waitForTimeout(2500);
+  await page.getByRole("link", { name: "c049" }).first().click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("damaged");
   await page.waitForTimeout(4000);
   // 0:30 provenance: slice text, manifest, prompt diff
   await page.locator("[aria-label='Provenance']").hover();
@@ -51,10 +51,12 @@ test("demo: gate, a blocked case, provenance, C and M, the judge audit", async (
   await page.getByRole("button", { name: "Record waiver and re-run gate" }).click();
   await expect(page.getByText("Not allowed (403)")).toBeVisible();
   await page.waitForTimeout(2500);
-  // 1:05 judge audit: canaries, N, ranges, waiting for labels
+  // 1:05 judge audit: trust bar vs human labels, canaries, matrix, disagreements
   await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Judge audit" }).click();
-  await page.waitForTimeout(3500);
+  await page.waitForTimeout(4000);
   await scroll(600);
+  await page.waitForTimeout(2500);
+  await scroll(500);
   await page.getByRole("button", { name: "Toggle dark mode" }).click();
   await page.waitForTimeout(2500);
 });
