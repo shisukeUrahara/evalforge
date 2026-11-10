@@ -1,8 +1,10 @@
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { readRunFile } from "../artifacts/runs";
 import { RunManifest } from "../artifacts/manifest";
 import type { GateCheck, Tier } from "../domain/schemas";
 import type { GateFile } from "../gate/run";
-import { trustFor } from "../metrics/trustRun";
+import { trustFor, type TrustFile } from "../metrics/trustRun";
 import type { TrustLine } from "../metrics/trust";
 import { gatedCandidates, versionStrip, type Candidate, type VersionStrip } from "./common";
 
@@ -31,7 +33,12 @@ export function gateView(dataDir: string, arm?: string): GateView | null {
   const manifest = RunManifest.parse(JSON.parse(readRunFile(dataDir, selected.run_id, "manifest.json")!));
   const [a, b] = manifest.arms;
   const what_changed = a.prompt !== b.prompt ? `prompt ${a.prompt} → ${b.prompt}` : `model ${a.model.spec} → ${b.model.spec}`;
-  const t = trustFor(dataDir, g.judge, "holdout", [selected.run_id, ...(g.null_run ? [g.null_run] : [])], g.heads.labels);
+  // The judge is measured once (ef trust), not per candidate: show the report the gate's trust status came from.
+  // Before any labels exist, fall back to what this run can measure (canaries).
+  const trustFile = path.join(dataDir, "data/labels", `trust-${g.judge}.json`);
+  const t: Pick<TrustFile, "lines"> = existsSync(trustFile)
+    ? (JSON.parse(readFileSync(trustFile, "utf8")) as TrustFile)
+    : trustFor(dataDir, g.judge, "holdout", [selected.run_id, ...(g.null_run ? [g.null_run] : [])], g.heads.labels);
   return {
     candidates,
     selected,

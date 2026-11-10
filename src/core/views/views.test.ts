@@ -38,3 +38,9 @@ test("judge view: canaries measured; labels pending until the owner labels", () 
   ]);
   expect(v.trust.confusion).toHaveLength(3);
 });
+
+test("every candidate shows the judge's measured trust report, not only labels on its own run", () => {
+  const kappa = (arm?: string) => gateView(cwd, arm)!.trust.lines.find((l) => l.name.startsWith("Agreement"))!;
+  for (const arm of ["B", "M", "C"]) expect(kappa(arm).n).toBe(kappa("B").n);
+  expect(kappa("M").n).toBeGreaterThan(0);
+});
